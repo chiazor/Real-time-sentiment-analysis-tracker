@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, request, jsonify
 #from pymongo import MongoClient
 import joblib
-from transformers import TextClassificationPipeline
+from transformers import TextClassificationPipeline, AutoModelForSequenceClassification
 
 #from pymongo.errors import BulkWriteError
 
@@ -22,8 +22,9 @@ def predict():
     tokenizer = open('tokenizer.pkl','rb')
     tokenizer = joblib.load(tokenizer)
     model = open('model.pkl','rb')
-    model = joblib.load(model)
-    pipe = TextClassificationPipeline(model=model, tokenizer=tokenizer)
+    model = joblib.load(model) #my model is too large for github.
+    _model = AutoModelForSequenceClassification.from_pretrained("yosemite/autonlp-imdb-sentiment-analysis-english-470512388")
+    pipe = TextClassificationPipeline(model=_model, tokenizer=tokenizer)
 
     if request.method == 'POST':
         message = request.form['message']
