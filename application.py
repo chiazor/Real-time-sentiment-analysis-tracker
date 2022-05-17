@@ -1,4 +1,5 @@
 from flask import Flask, render_template, url_for, request
+from pymongo import MongoClient
 import joblib
 from sklearn.feature_extraction.text import TfidfTransformer
 
