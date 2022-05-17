@@ -2,7 +2,7 @@ name: Deploy Sentiment App
 on:
   push:
     branches:
-    - master
+    - main
 
 jobs:
   build:
