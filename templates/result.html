@@ -35,28 +35,22 @@
             <div class="u-layout-row">
               <div class="u-align-left u-container-style u-layout-cell u-palette-1-light-3 u-size-35 u-layout-cell-1">
                 <div class="u-container-layout u-valign-middle-lg u-valign-middle-md u-valign-middle-xl u-container-layout-1">
-                  <h2 class="u-custom-font u-font-montserrat u-text u-text-1"> Tell us how you feel about our Movie</h2>
-                  <h2>Prediction</h2>
-	<div class="results">
-
-	{% if prediction == 1%}
-
-	<h2 style="color:red;">This is a potential suicidal message</h2>
-	{% elif prediction == 0%}
-	<h2 style="color:blue;">No suicidal message detected</h2>
-	{% endif %}
-
-	</div>
+                  <h2 class="u-custom-font u-font-montserrat u-text u-text-1">Prediction</h2>
+	                 <div class="results u-text u-text-3">
+                     {% if prediction == 1%}
+                     <p style="color:blue;">Review is Positive. We are glad you enjoyed the movie</p>
+	                    {% elif prediction == 0%}
+	                     <p style="color:red;">Review is Negative. We are sorry that it didn't meet your expectation. We would do better</p>
+	                      {% endif %}
+	                     </div>
+                  <h2 class="u-custom-font u-font-montserrat u-text u-text-1">Search for Keywords</h2>
                   <div class="u-expanded-width-sm u-expanded-width-xs u-form u-form-1">
                     <form action="{{ url_for('predict')}}" method="POST" class="u-clearfix u-form-spacing-10 u-form-vertical u-inner-form" source="email" name="form" style="padding: 0px;">
                       <div class="u-form-group u-form-name u-form-group-1">
                         <label for="name-e0f0" class="u-form-control-hidden u-label"></label>
-                        <input type="text" placeholder="Enter your Name" id="name-e0f0" name="name" class="u-input u-input-rectangle u-white" required="">
+                        <input type="text" placeholder="Enter your Keyword" id="name-e0f0" name="name" class="u-input u-input-rectangle u-white" required="">
                       </div>
-                      <div class="u-form-group u-form-message u-form-group-2">
-                        <label for="message-e0f0" class="u-form-control-hidden u-label"></label>
-                        <textarea placeholder="Enter your message" rows="4" cols="50" id="message-e0f0" name="message" class="u-input u-input-rectangle u-white" required=""></textarea>
-                      </div>
+
                       <div class="u-align-left u-form-group u-form-submit u-form-group-3">
                         <a href="#" class="u-btn u-btn-submit u-button-style u-btn-1">Submit</a>
                         <input type="submit" value="submit" class="u-form-control-hidden">
@@ -71,7 +65,12 @@
               <div class="u-align-center u-container-style u-layout-cell u-size-25 u-layout-cell-2">
                 <div class="u-container-layout u-valign-middle u-container-layout-2">
                   <p class="u-custom-font u-font-montserrat u-text u-text-grey-40 u-text-2">Real-time Viewers Sentiment Tracker</p>
-                  <lottie-player src="https://assets1.lottiefiles.com/private_files/lf30_bb9bkg1h.json" background="transparent"  speed="1"  style="width: 500px; height: 500px;" loop  autoplay></lottie-player>
+                  {% if prediction == 1%}
+                  <lottie-player src="https://assets10.lottiefiles.com/packages/lf20_xv1gn5by.json" background="transparent"  speed="1"  style="width: 300px; height: 300px;" loop  autoplay></lottie-player>
+                   {% elif prediction == 0%}
+                    <lottie-player src="https://assets7.lottiefiles.com/packages/lf20_lt5xlugl.json" background="transparent"  speed="1"  style="width: 300px; height: 300px;" loop  autoplay></lottie-player>
+                     {% endif %}
+
                   <p class="u-text u-text-3">This is a sentiment analysis demo site designed by <a href="https://jenniferkwentoh.com" class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-palette-1-base u-btn-2">Jennifer Kwentoh</a>
                   </p>
                 </div>
