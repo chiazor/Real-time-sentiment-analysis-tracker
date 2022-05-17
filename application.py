@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, jsonify
-from pymongo import MongoClient
+#from pymongo import MongoClient
 import joblib
 from transformers import TextClassificationPipeline
 
@@ -7,9 +7,9 @@ from transformers import TextClassificationPipeline
 
 
 application = Flask(__name__)
-application.config["MONGO_URI"] = "mongodb://localhost:27017/sentiment_db"
-mongodb_client = PyMongo(application)
-db = mongodb_client.db
+# application.config["MONGO_URI"] = "mongodb://localhost:27017/sentiment_db"
+# mongodb_client = PyMongo(application)
+# db = mongodb_client.db
 
 
 @application.route('/')
