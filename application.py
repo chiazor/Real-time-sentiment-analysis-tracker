@@ -3,15 +3,15 @@ from pymongo import MongoClient
 import joblib
 from sklearn.feature_extraction.text import TfidfTransformer
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 
-@app.route('/')
+@application.route('/')
 def home():
     return render_template('index.html')
 
 
-@app.route('/predict', methods=['POST'])
+@application.route('/predict', methods=['POST'])
 def predict():
     vectorizer = open('vectorizer.pkl','rb')
     cv = joblib.load(vectorizer)
@@ -31,4 +31,5 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    application.run(host='0.0.0.0', port=80)
