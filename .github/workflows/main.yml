@@ -73,6 +73,6 @@ jobs:
         run: |
           eb init -p python-3.8 movie-sentiment --region eu-central-1
       # Deploy to (or Create) the Elastic Beanstalk environment
-      - name: Create sentiment app env & deploy
+      - name: Create moviesentiment-env env & deploy
         run: |
-          (eb use Moviesentiment-env && eb status Moviesentiment-env && eb deploy) || eb create Moviesentiment-env
+          (eb use Moviesentiment-env && eb status Moviesentiment-env && eb deploy) 
