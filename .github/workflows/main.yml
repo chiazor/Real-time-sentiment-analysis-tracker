@@ -75,4 +75,4 @@ jobs:
       # Deploy to (or Create) the Elastic Beanstalk environment
       - name: Create moviesentiment-env env & deploy
         run: |
-          (eb use sentiment_analysis-env && eb status sentiment_analysis-env && eb deploy) || eb create sentiment_analysis-env
+          (eb use sentimentanalysis-env && eb status sentimentanalysis-env && eb deploy) || eb create sentimentanalysis-env
