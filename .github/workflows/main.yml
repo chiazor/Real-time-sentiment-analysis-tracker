@@ -1,78 +1,27 @@
-
-name: Sentiment App
-
+name: Deploy Sentiment App
 on:
-  # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [main]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+    branches:
+    - master
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
-
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
 
-        # Set up Python 3.6 environment
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v1
-        with:
-          python-version: "3.9"
+    - name: Checkout source code
+      uses: actions/checkout@v2
 
-      # Install dependencies
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
 
-      # - name: Run unit tests
-      #   run: |
-      #     python test_application.py
-  deploy:
-    # Only run this job if "build" has ended successfully
-    needs:
-      - build
-
-    runs-on: ubuntu-latest
-
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE
-      - uses: actions/checkout@v2
-
-      # Set up Python 3.6 environment
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v1
-        with:
-          python-version: "3.9"
-
-      # Elastic Beanstalk CLI version
-      - name: Get EB CLI version
-        run: |
-          python -m pip install --upgrade pip
-          pip install awsebcli --upgrade
-          eb --version
-          # Configure AWS Credentials
-      # Configure AWS Credentials
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-central-1
-
-      # Create the Elastic Beanstalk application
-      - name: Create EBS application
-        run: |
-          eb init -p python-3.8 sentiment_analysis --region eu-central-1
-      # Deploy to (or Create) the Elastic Beanstalk environment
-      - name: Create moviesentiment-env env & deploy
-        run: |
-          (eb use sentimentanalysis-env && eb status sentimentanalysis-env && eb deploy) || eb create sentimentanalysis-env
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: sentiment_analysis
+        environment_name: Sentimentanalysis-env
+        version_label: 1
+        region: us-west-2
+        deployment_package: deploy.zip
